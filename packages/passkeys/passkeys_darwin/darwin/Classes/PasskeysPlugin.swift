@@ -81,6 +81,7 @@ public class PasskeysPlugin: NSObject, FlutterPlugin, PasskeysApi {
                 name: user.name,
                 userID: decodedUserId
             )
+            platformRequest.userVerificationPreference = .required
             
 
             if #available(iOS 17.4, *) {
@@ -100,6 +101,7 @@ public class PasskeysPlugin: NSObject, FlutterPlugin, PasskeysApi {
                 name: user.name,
                 userID: decodedUserId
             )
+            externalRequest.userVerificationPreference = .required
 
             switch residentKeyPreference {
             case .some("preferred"):
@@ -171,6 +173,7 @@ public class PasskeysPlugin: NSObject, FlutterPlugin, PasskeysApi {
         let platformProvider = ASAuthorizationPlatformPublicKeyCredentialProvider(relyingPartyIdentifier: relyingPartyId)
         let platformRequest = platformProvider.createCredentialAssertionRequest(challenge: decodedChallenge)
         platformRequest.allowedCredentials = parseCredentials(credentials: allowedCredentials)
+        platformRequest.userVerificationPreference = .required
         requests.append(platformRequest)
         
         // We should not show the security key flow when preferImmediatelyAvailable is set to true
@@ -179,6 +182,7 @@ public class PasskeysPlugin: NSObject, FlutterPlugin, PasskeysApi {
             let securityKeyProvider = ASAuthorizationSecurityKeyPublicKeyCredentialProvider(relyingPartyIdentifier: relyingPartyId)
             let externalRequest = securityKeyProvider.createCredentialAssertionRequest(challenge: decodedChallenge)
             externalRequest.allowedCredentials = parseSecurityKeyCredentials(credentials: allowedCredentials)
+            externalRequest.userVerificationPreference = .required
             requests.append(externalRequest)
         }
         
