@@ -81,8 +81,8 @@ public class PasskeysPlugin: NSObject, FlutterPlugin, PasskeysApi {
                 name: user.name,
                 userID: decodedUserId
             )
-            externalRequest.userVerificationPreference = .required
-            print("★★★ UV Preference: \(externalRequest.userVerificationPreference.rawValue) ★★★")
+            platformRequest.userVerificationPreference = .required
+            print("★★★ UV Preference: \(platformRequest.userVerificationPreference.rawValue) ★★★")
             
 
             if #available(iOS 17.4, *) {
